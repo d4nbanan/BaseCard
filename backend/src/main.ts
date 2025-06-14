@@ -20,7 +20,6 @@ async function bootstrap() {
   );
 
   app.use(cookieParser());
-  app.setGlobalPrefix('api');
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(process.env.PORT ?? 3000);
