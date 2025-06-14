@@ -22,8 +22,7 @@ export class AuthService {
   public async verify(dto: VerifyDtoReqDto) {
     const { message, signature } = dto;
     const address = getAddressFromMessage(message);
-    console.log(getChainIdFromMessage(message));
-    const chainId = Number(getChainIdFromMessage(message));
+    const chainId = parseInt(getChainIdFromMessage(message).split(':')[1], 10);
 
     const publicClient = createPublicClient({
       transport: http(
