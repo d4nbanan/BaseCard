@@ -22,7 +22,7 @@ export class AuthService {
   public async verify(dto: VerifyDtoReqDto) {
     const { message, signature } = dto;
     const address = getAddressFromMessage(message);
-    const chainId = getChainIdFromMessage(message);
+    const chainId = Number(getChainIdFromMessage(message));
 
     const publicClient = createPublicClient({
       transport: http(
@@ -37,7 +37,7 @@ export class AuthService {
     });
 
     if (verificationResult) {
-      return this.jwtAuthService.generateToken({ address });
+      return { address, chainId };
     }
 
     return null;

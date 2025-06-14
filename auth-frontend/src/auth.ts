@@ -25,7 +25,8 @@ async function getSession() {
 
   const isValidData =
     typeof data === 'object' &&3
-    typeof data.address === 'string'
+    typeof data.address === 'string' &&
+    typeof data.chainId === 'number';
 
   return isValidData ? (data as SIWESession) : null;
 }

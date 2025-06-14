@@ -11,7 +11,10 @@ import {
 import { AuthService } from './auth.service';
 import { generateNonce } from 'siwe';
 import { VerifyDtoReqDto } from './dtos/verify-dto.req.dto';
-import { CookieManagerService, SESSION_COOKIE_IDENTIFIER } from './providers/cookie-manager.service';
+import {
+  CookieManagerService,
+  SESSION_COOKIE_IDENTIFIER,
+} from './providers/cookie-manager.service';
 import { Response, Request } from 'express';
 
 @Controller('auth')
@@ -32,7 +35,7 @@ export class AuthController {
       throw new ForbiddenException();
     }
 
-    this.cookieManager.setToken(response, result);
+    this.cookieManager.setToken(response, result.address, result.chainId);
   }
 
   @Get('nonce')
@@ -42,7 +45,13 @@ export class AuthController {
   }
 
   @Get()
-  getSession(@Req() req: Request): { address: string | undefined } {
-    return { address: req.cookies[SESSION_COOKIE_IDENTIFIER] as string }
+  getSession(@Req() req: Request): {
+    address: string | undefined;
+    chainId: string | undefined;
+  } {
+    return {
+      address: req.cookies[SESSION_COOKIE_IDENTIFIER] as string,
+      chainId: req.cookies['chainId'] as string,
+    };
   }
 }

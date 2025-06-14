@@ -22,11 +22,13 @@ export class CookieManagerService {
     };
   }
 
-  setToken(response: Response, address: string): void {
+  setToken(response: Response, address: string, chainId: number): void {
     response.cookie(SESSION_COOKIE_IDENTIFIER, address, this.cookieOptions);
+    response.cookie('chainId', chainId, this.cookieOptions);
   }
 
   removeCookieToken(response: Response) {
     response.clearCookie(SESSION_COOKIE_IDENTIFIER, this.cookieOptions);
+    response.clearCookie('chainId', this.cookieOptions);
   }
 }
