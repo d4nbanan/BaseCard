@@ -18,14 +18,14 @@ export class AuthService {
   public async verify(dto: VerifyDtoReqDto) {
     const { message, signature } = dto;
     const address = getAddressFromMessage(message);
-    let chainId = getChainIdFromMessage(message);
+    const chainId = getChainIdFromMessage(message);
 
     const publicClient = createPublicClient({
       transport: http(
         `https://rpc.walletconnect.org/v1/?chainId=${chainId}&projectId=${this.PROJECT_ID}`,
       ),
     });
-    
+
     return publicClient.verifyMessage({
       message,
       address: address as `0x${string}`,

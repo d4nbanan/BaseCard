@@ -6,10 +6,12 @@ import {
   type SIWEVerifyMessageArgs,
 } from '@reown/appkit-siwe';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = '/api';
 
 /* Function that returns the user's session - this should come from your SIWE backend */
 async function getSession() {
+  return null;
+
   const res = await fetch(BASE_URL + '/auth', {
     method: 'GET',
     headers: {

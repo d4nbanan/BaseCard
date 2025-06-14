@@ -1,0 +1,26 @@
+name: base-card
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks:
+      - base-card
+    ports:
+      - "443:3000"
+    env_file:
+      - ./backend/.env
+
+  hardhat:
+    build:
+      context: ./blockchain
+      dockerfile: Dockerfile
+    networks:
+      - base-card
+    ports:
+      - "8545:8545"
+
+networks:
+  base-card:
+    driver: bridge

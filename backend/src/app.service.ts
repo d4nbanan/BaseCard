@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { ethers } from 'ethers';
+import { ethers, JsonRpcProvider, Wallet } from 'ethers';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
-  private readonly provider = new ethers.JsonRpcProvider(
-    'http://127.0.0.1:8545',
-  );
-  private readonly PRIVATE_KEY =
-    '0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e';
-  private readonly signer = new ethers.Wallet(this.PRIVATE_KEY, this.provider);
+  private readonly provider: JsonRpcProvider;
+  private readonly PRIVATE_KEY: string;
+  private readonly signer: Wallet;
 
-  constructor() {
+  constructor(private configService: ConfigService) {
+    this.provider = new ethers.JsonRpcProvider(
+      this.configService.get<string>('RPC_URL'),
+    );
+    this.PRIVATE_KEY = this.configService.get<string>('PRIVATE_KEY')!;
+    this.signer = new ethers.Wallet(this.PRIVATE_KEY, this.provider);
+
     this.getBalance();
   }
 
