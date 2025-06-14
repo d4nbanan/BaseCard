@@ -3,18 +3,14 @@ import { AppKitNetwork, base } from '@reown/appkit/networks';
 import { siweConfig } from './auth';
 import { EthersAdapter } from '@reown/appkit-adapter-ethers';
 
-// 2. Create your application's metadata object
 const metadata = {
   name: 'BaseCard',
   description: 'BaseCard description',
-  url: 'http://localhost:5173/', // origin must match your domain & subdomain
+  url: 'https://auth.basecard.io',
   icons: [ 'https://avatars.githubusercontent.com/u/179229932' ],
 };
 
 const main = async () => {
-  if(document.location.pathname !== '/verify') {
-    return;
-  }
   const modal = createAppKit({
     adapters: [ new EthersAdapter() ],
     networks: [ base as AppKitNetwork ],
@@ -30,11 +26,7 @@ const main = async () => {
     siweConfig,
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const paramValue = params.get('type');
-  if(paramValue === 'auth') {
-    modal.open();
-  }
+  modal.open();
 
   modal.subscribeState(() => {
     const address = modal.getAddress();

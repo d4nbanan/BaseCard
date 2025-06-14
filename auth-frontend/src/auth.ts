@@ -6,7 +6,7 @@ import {
   type SIWEVerifyMessageArgs,
 } from '@reown/appkit-siwe';
 
-const BASE_URL = '/api';
+const BASE_URL = 'https://api.basecard.io';
 
 /* Function that returns the user's session - this should come from your SIWE backend */
 async function getSession() {
