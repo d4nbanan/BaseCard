@@ -6,12 +6,16 @@ import {
 } from '@reown/appkit-siwe';
 import { createPublicClient, http } from 'viem';
 import { ConfigService } from '@nestjs/config';
+import { JwtAuthService } from './providers/jwt-auth.service';
 
 @Injectable()
 export class AuthService {
   private readonly PROJECT_ID: string;
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private jwtAuthService: JwtAuthService,
+  ) {
     this.PROJECT_ID = this.configService.get<string>('PROJECT_ID')!;
   }
 
@@ -26,10 +30,16 @@ export class AuthService {
       ),
     });
 
-    return publicClient.verifyMessage({
+    const verificationResult = await publicClient.verifyMessage({
       message,
       address: address as `0x${string}`,
       signature,
     });
+
+    if (verificationResult) {
+      return await this.jwtAuthService.generateToken({ address });
+    }
+
+    return null;
   }
 }

@@ -2,6 +2,9 @@ import { createAppKit } from '@reown/appkit';
 import { AppKitNetwork, base } from '@reown/appkit/networks';
 import { siweConfig } from './auth';
 import { EthersAdapter } from '@reown/appkit-adapter-ethers';
+import { Buffer } from 'buffer';
+
+globalThis.Buffer = Buffer;
 
 const metadata = {
   name: 'BaseCard',
@@ -31,7 +34,7 @@ const main = async () => {
   modal.subscribeState(() => {
     const address = modal.getAddress();
     if(modal.getAddress()) {
-      return document.location.href = `https://basecard.io/login?address=${address}`;
+      // return document.location.href = `https://basecard.io/login?address=${address}`;
     }
   });
 }
