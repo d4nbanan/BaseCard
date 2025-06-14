@@ -2,7 +2,7 @@ import { CookieOptions, Response } from 'express';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-export const SESSION_COOKIE_IDENTIFIER = 'session';
+export const SESSION_COOKIE_IDENTIFIER = 'address';
 
 @Injectable()
 export class CookieManagerService {

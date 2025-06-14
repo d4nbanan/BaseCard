@@ -5,13 +5,14 @@ import {
   Get,
   Header,
   Post,
+  Req,
   Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { generateNonce } from 'siwe';
 import { VerifyDtoReqDto } from './dtos/verify-dto.req.dto';
-import { CookieManagerService } from './providers/cookie-manager.service';
-import { Response } from 'express';
+import { CookieManagerService, SESSION_COOKIE_IDENTIFIER } from './providers/cookie-manager.service';
+import { Response, Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -38,5 +39,10 @@ export class AuthController {
   @Header('Content-Type', 'text/plain')
   public getNonce() {
     return generateNonce();
+  }
+
+  @Get()
+  getSession(@Req() req: Request): { address: string | undefined } {
+    return { address: req.cookies[SESSION_COOKIE_IDENTIFIER] as string }
   }
 }

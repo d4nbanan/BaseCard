@@ -37,7 +37,7 @@ export class AuthService {
     });
 
     if (verificationResult) {
-      return await this.jwtAuthService.generateToken({ address });
+      return this.jwtAuthService.generateToken({ address });
     }
 
     return null;

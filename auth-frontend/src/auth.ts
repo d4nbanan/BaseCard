@@ -10,8 +10,6 @@ const BASE_URL = 'https://api.basecard.io';
 
 /* Function that returns the user's session - this should come from your SIWE backend */
 async function getSession() {
-  return null;
-
   const res = await fetch(BASE_URL + '/auth', {
     method: 'GET',
     headers: {
@@ -26,9 +24,8 @@ async function getSession() {
   const data = (await res.json()) as Record<string, any>;
 
   const isValidData =
-    typeof data === 'object' &&
-    typeof data.address === 'string' &&
-    typeof data.chainId === 'number';
+    typeof data === 'object' &&3
+    typeof data.address === 'string'
 
   return isValidData ? (data as SIWESession) : null;
 }
@@ -65,7 +62,7 @@ export const siweConfig = createSIWEConfig({
   getMessageParams: async () => ({
     domain: window.location.host,
     uri: window.location.origin,
-    chains: [8453, 1],
+    chains: [8453],
     statement: 'Please sign with your account (BaseCARD)',
   }),
   createMessage: ({ address, ...args }: SIWECreateMessageArgs) =>
